@@ -80,6 +80,18 @@ function setupVideo(video, src, host) {
   video.addEventListener('error', () => host.classList.remove('has-video'), { once: true });
 }
 setupVideo($('#attractVideo'), VIDEOS.attract, attract);
+
+// fade to dark just before the clip ends, restart, then fade back in
+const FADE_S = 0.8;
+const av = $('#attractVideo'), fade = $('#attractFade');
+av.addEventListener('timeupdate', () => {
+  if (av.duration && av.duration - av.currentTime < FADE_S) fade.classList.add('on');
+});
+av.addEventListener('ended', () => {
+  av.currentTime = 0;
+  av.play().catch(() => {});
+  requestAnimationFrame(() => fade.classList.remove('on'));
+});
 setupVideo($('#fillVideo'), VIDEOS.fill, $('.s-making'));
 
 function enterAttract() {

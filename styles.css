@@ -305,3 +305,6 @@ body.kiosk-mode .kiosk{border-radius:0;box-shadow:none}
 .s-attract.has-video .attract-taglines{display:none}
 .s-attract.has-video .attract-top{top:80px}
 .s-attract.has-video .logo-xl{width:440px;filter:drop-shadow(0 4px 18px rgba(0,0,0,.35))}
+.attract-fade{position:absolute;inset:0;background:#1a0b24;opacity:0;pointer-events:none;transition:opacity .6s ease;display:none}
+.s-attract.has-video .attract-fade{display:block}
+.attract-fade.on{opacity:1}
