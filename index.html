@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Almalibre Kiosk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5">
+</head>
+<body>
+
+<div class="stage-wrap">
+  <div class="kiosk" id="kiosk">
+
+    <!-- 0 · ATTRACT LOOP -->
+    <section class="screen s-attract active" data-screen="attract">
+      <video class="attract-video" id="attractVideo" muted loop playsinline preload="auto"></video>
+      <div class="attract-fallback">
+        <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+        <img class="attract-cup" src="assets/cup.png" alt="">
+        <div class="float-tops">
+          <img src="assets/t-granola.png" alt=""><img src="assets/t-frutos.png" alt="">
+          <img src="assets/t-oreo.png" alt=""><img src="assets/t-choco.png" alt="">
+        </div>
+      </div>
+      <div class="attract-top"><img src="assets/logo-white.png" alt="Almalibre natural foods" class="logo-xl"></div>
+      <div class="attract-taglines">
+        <p class="tag show">Açaí cremoso, hecho al momento</p>
+        <p class="tag">Tus toppings, a tu manera</p>
+        <p class="tag">Listo en menos de un minuto</p>
+      </div>
+      <div class="attract-cta"><span class="pulse-dot"></span>Toca la pantalla para empezar</div>
+    </section>
+
+    <!-- 1 · WELCOME -->
+    <section class="screen s-welcome" data-screen="welcome">
+      <img src="assets/logo-white.png" alt="Almalibre" class="logo-m">
+      <h2 class="promo">Açaí + 1 Topping <em>de regalo</em></h2>
+      <div class="welcome-cup">
+        <svg class="splash" viewBox="0 0 900 900" aria-hidden="true"><path fill="#fff" d="M450 90c140 0 300 60 360 210 55 140 20 300-60 420-60 90-180 150-300 150S220 810 160 720C80 600 40 450 100 310 160 170 310 90 450 90z"/><circle cx="90" cy="690" r="22" fill="#4b1f73"/><circle cx="130" cy="730" r="14" fill="#4b1f73"/><circle cx="820" cy="760" r="18" fill="#4b1f73"/><circle cx="780" cy="820" r="10" fill="#4b1f73"/></svg>
+        <img src="assets/cup.png" alt="Açaí Almalibre">
+      </div>
+      <button class="btn btn-yellow btn-wide" data-go="toppings">¡Empieza aquí!</button>
+    </section>
+
+    <!-- 2 · TOPPINGS -->
+    <section class="screen s-toppings light" data-screen="toppings">
+      <header class="head">
+        <h1>Personaliza tu açaí</h1>
+        <p>Elige todos los toppings que quieras · <strong>el primero va de regalo</strong></p>
+      </header>
+      <h3 class="group-title">Topping sólido</h3>
+      <div class="grid" id="gridSolid"></div>
+      <h3 class="group-title">Topping líquido</h3>
+      <div class="grid" id="gridLiquid"></div>
+      <div class="toppings-foot">
+        <div class="mini-total" id="miniTotal"></div>
+        <button class="btn btn-yellow" data-go="summary">Ver mi bowl <span class="arr">→</span></button>
+      </div>
+
+      <div class="sheet-scrim" id="sheetScrim"></div>
+      <div class="sheet" id="sheet">
+        <button class="sheet-close" id="sheetClose" aria-label="Cerrar">✕</button>
+        <img id="sheetImg" alt="">
+        <div>
+          <h4 id="sheetName"></h4>
+          <p id="sheetDesc"></p>
+          <h5>Ingredientes</h5>
+          <p id="sheetIng"></p>
+          <h5>Alérgenos</h5>
+          <ul id="sheetAll"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · SUMMARY -->
+    <section class="screen s-summary light" data-screen="summary">
+      <header class="head">
+        <h1>Tu Açaí Bowl</h1>
+        <p>Revisa tu pedido</p>
+      </header>
+      <div class="sum-preview">
+        <img src="assets/cup.png" alt="">
+      </div>
+      <div class="panel" id="panelSolid"><h3>Sólidos elegidos</h3><div class="chips"></div></div>
+      <div class="panel" id="panelLiquid"><h3>Líquidos elegidos</h3><div class="chips"></div></div>
+      <div class="panel price" id="priceBox"></div>
+      <div class="row-btns">
+        <button class="btn btn-ghost" data-go="toppings">Cambiar toppings</button>
+        <button class="btn btn-yellow" data-go="payment">Pagar <span class="arr">→</span></button>
+      </div>
+    </section>
+
+    <!-- 4 · PAYMENT (improved) -->
+    <section class="screen s-payment light" data-screen="payment">
+      <header class="head">
+        <h1>Realiza tu pago</h1>
+        <p>Total a pagar</p>
+      </header>
+      <div class="pay-total" id="payTotal">6,50 €</div>
+      <div class="pay-lines" id="payLines"></div>
+
+      <button class="nfc" id="nfc" aria-label="Simular pago con tarjeta">
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <span class="nfc-core">
+          <svg class="ic-nfc" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M22 20c5 7 5 17 0 24"/><path d="M32 13c9 11 9 27 0 38"/><path d="M42 6c13 15 13 37 0 52"/></g></svg>
+          <span class="spinner"></span>
+          <svg class="ic-check" viewBox="0 0 64 64"><path d="M16 33l11 11 22-24" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="ic-x" viewBox="0 0 64 64"><path d="M20 20l24 24M44 20L20 44" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg>
+        </span>
+      </button>
+      <div class="pay-msg">
+        <p class="pm pm-wait show">Acerca tu tarjeta o móvil al lector</p>
+        <p class="pm pm-proc">Procesando pago…</p>
+        <p class="pm pm-ok">¡Pago aceptado!</p>
+        <p class="pm pm-err">Pago rechazado. Inténtalo de nuevo</p>
+      </div>
+      <div class="reader-hint"><span>El lector está debajo de la pantalla</span><span class="down">↓</span></div>
+      <div class="brands">
+        <span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span>
+      </div>
+      <button class="btn btn-ghost btn-back" data-go="summary">Volver</button>
+    </section>
+
+    <!-- 5 · MAKING (merged Preparando + Dispensando, with live cup fill) -->
+    <section class="screen s-making light" data-screen="making">
+      <div class="make-stage" id="makeStage">
+        <video class="fill-video" id="fillVideo" muted playsinline preload="auto"></video>
+        <div class="cup-anim" id="cupAnim">
+          <div class="nozzle"></div>
+          <div class="stream" id="stream"></div>
+          <svg class="cup-mouth" viewBox="0 0 900 791" aria-hidden="true">
+            <defs>
+              <linearGradient id="inside" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfc8d3"/><stop offset="1" stop-color="#f3f0f4"/></linearGradient>
+              <clipPath id="mouthClip"><ellipse cx="451" cy="392" rx="226" ry="17"/></clipPath>
+            </defs>
+            <ellipse cx="451" cy="392" rx="236" ry="22" fill="#fbfbfb"/>
+            <ellipse cx="451" cy="392" rx="226" ry="17" fill="url(#inside)"/>
+            <g clip-path="url(#mouthClip)"><ellipse id="innerFill" cx="451" cy="420" rx="230" ry="30" fill="#3a1236"/></g>
+          </svg>
+          <img class="swirl" id="swirl" src="assets/swirl.png" alt="">
+          <img class="cup-front" src="assets/cup-front.png" alt="">
+          <div class="drops" id="drops"></div>
+        </div>
+      </div>
+      <h1 class="make-title" id="makeTitle">¡Preparando tu Açaí!</h1>
+      <p class="make-sub" id="makeSub">Sirviendo el açaí…</p>
+
+      <ol class="steps" id="steps">
+        <li data-k="acai"><span class="dot"></span>Açaí</li>
+        <li data-k="tops"><span class="dot"></span>Toppings</li>
+        <li data-k="done"><span class="dot"></span>¡Listo!</li>
+      </ol>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <p class="eta" id="eta">Quedan 12 s</p>
+      <div class="make-chips" id="makeChips"></div>
+      <p class="fact" id="fact"></p>
+    </section>
+
+    <!-- 6 · READY (improved) -->
+    <section class="screen s-ready" data-screen="ready">
+      <svg class="drip" viewBox="0 0 1080 1400" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="#F9B51B" d="M0 0h1080v1180c-40 30-70 10-110 40s-30 90-90 80-40-70-100-60-60 110-130 100-30-80-100-90-50 60-120 60-60-90-130-80-40 70-110 60S80 1150 0 1230z"/>
+      </svg>
+      <div class="sparkles" id="sparkles"></div>
+      <div class="ready-cup"><img src="assets/cup.png" alt=""></div>
+      <h1 class="ready-title">¡Tu Açaí<br>está listo!</h1>
+      <p class="ready-sub">Recógelo en la bandeja de salida</p>
+      <div class="tray-arrow"><span>↓</span><span>↓</span><span>↓</span></div>
+      <p class="thanks">Gracias por elegir Almalibre · comparte tu bowl con <b>#Almalibre</b></p>
+      <div class="ready-actions">
+        <button class="btn btn-ghost countdown" data-go="attract">
+          <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18"/><circle id="cdRing" cx="22" cy="22" r="18"/></svg>
+          Volviendo al inicio en <b id="cdNum">10</b>
+        </button>
+        <button class="btn btn-yellow" data-go="welcome">Pedir otro</button>
+      </div>
+    </section>
+
+    <!-- idle modal -->
+    <div class="idle" id="idle">
+      <div class="idle-card">
+        <h3>¿Sigues ahí?</h3>
+        <p>Volvemos al inicio en <b id="idleNum">10</b> s</p>
+        <button class="btn btn-yellow" id="idleStay">Sí, continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- prototype controls (not part of the kiosk UI) -->
+<nav class="proto-bar" id="protoBar">
+  <span class="pb-title">Prototipo · Almalibre</span>
+  <select id="jump" aria-label="Ir a pantalla">
+    <option value="attract">0 · Reposo (vídeo)</option>
+    <option value="welcome">1 · Bienvenida</option>
+    <option value="toppings">2 · Toppings</option>
+    <option value="summary">3 · Resumen</option>
+    <option value="payment">4 · Pago</option>
+    <option value="making">5 · Preparación</option>
+    <option value="ready">6 · Listo</option>
+  </select>
+  <label class="pb-check"><input type="checkbox" id="declineNext"> Simular pago rechazado</label>
+  <button id="restart">Reiniciar</button>
+  <span class="pb-hint">En «Pago» toca el círculo amarillo para simular la tarjeta</span>
+</nav>
+
+<script src="app.js?v=5"></script>
+</body>
+</html>
