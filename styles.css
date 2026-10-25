@@ -297,3 +297,11 @@ body.kiosk-mode .kiosk{border-radius:0;box-shadow:none}
 .panel .chip{max-width:none;width:100%;padding:14px 24px;font-size:32px;gap:20px}
 .panel .chip img{width:84px;height:64px}
 .panel .chip .x2{margin-left:auto;font-size:26px;padding:6px 14px}
+
+/* attract video: keep logo + CTA legible over footage */
+.s-attract.has-video::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(20,8,30,.55) 0%,rgba(20,8,30,0) 30%,rgba(20,8,30,0) 72%,rgba(20,8,30,.5) 100%)}
+.s-attract .attract-top,.s-attract .attract-taglines,.s-attract .attract-cta{z-index:2}
+.s-attract.has-video .attract-taglines{display:none}
+.s-attract.has-video .attract-top{top:80px}
+.s-attract.has-video .logo-xl{width:440px;filter:drop-shadow(0 4px 18px rgba(0,0,0,.35))}
