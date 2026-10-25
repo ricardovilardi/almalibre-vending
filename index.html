@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=10">
+<link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
 
@@ -16,22 +16,9 @@
 
     <!-- 0 · ATTRACT LOOP -->
     <section class="screen s-attract active" data-screen="attract">
-      <video class="attract-video" id="attractVideo" muted playsinline preload="auto"></video>
+      <video class="attract-video" id="attractVideo" muted playsinline autoplay preload="auto" poster="assets/attract-poster.jpg"></video>
       <div class="attract-fade" id="attractFade"></div>
-      <div class="attract-fallback">
-        <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-        <img class="attract-cup" src="assets/cup.png" alt="">
-        <div class="float-tops">
-          <img src="assets/t-granola.png" alt=""><img src="assets/t-frutos.png" alt="">
-          <img src="assets/t-oreo.png" alt=""><img src="assets/t-choco.png" alt="">
-        </div>
-      </div>
       <div class="attract-top"><img src="assets/logo-white.png" alt="Almalibre natural foods" class="logo-xl"></div>
-      <div class="attract-taglines">
-        <p class="tag show">Açaí cremoso, hecho al momento</p>
-        <p class="tag">Tus toppings, a tu manera</p>
-        <p class="tag">Listo en menos de un minuto</p>
-      </div>
       <div class="attract-cta"><span class="pulse-dot"></span>Toca la pantalla para empezar</div>
     </section>
 
@@ -82,15 +69,17 @@
         <h1>Tu Açaí Bowl</h1>
         <p>Revisa tu pedido</p>
       </header>
-      <div class="sum-preview">
-        <img src="assets/cup.png" alt="">
+      <div class="sum-list" id="sumList">
+        <div class="panel" id="panelSolid"><h3>Sólidos elegidos</h3><div class="rows"></div></div>
+        <div class="panel" id="panelLiquid"><h3>Líquidos elegidos</h3><div class="rows"></div></div>
+        <p class="sum-empty" id="sumEmpty">Tu bowl no tiene toppings todavía.</p>
       </div>
-      <div class="panel" id="panelSolid"><h3>Sólidos elegidos</h3><div class="chips"></div></div>
-      <div class="panel" id="panelLiquid"><h3>Líquidos elegidos</h3><div class="chips"></div></div>
-      <div class="panel price" id="priceBox"></div>
-      <div class="row-btns">
-        <button class="btn btn-ghost" data-go="toppings">Cambiar toppings</button>
-        <button class="btn btn-yellow" data-go="payment">Pagar <span class="arr">→</span></button>
+      <div class="checkout">
+        <div class="price" id="priceBox"></div>
+        <div class="row-btns">
+          <button class="btn btn-ghost" data-go="toppings">Cambiar toppings</button>
+          <button class="btn btn-yellow" data-go="payment">Pagar <span class="arr">→</span></button>
+        </div>
       </div>
     </section>
 
@@ -208,6 +197,6 @@
   <span class="pb-hint">En «Pago» toca el círculo amarillo para simular la tarjeta</span>
 </nav>
 
-<script src="app.js?v=10"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>

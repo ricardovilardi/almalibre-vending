@@ -97,9 +97,6 @@ setupVideo($('#fillVideo'), VIDEOS.fill, $('.s-making'));
 function enterAttract() {
   resetOrder();
   $('#attractVideo').play?.().catch(() => {});
-  const tags = $$('.tag'); let i = 0;
-  const rot = () => { tags.forEach((t, k) => t.classList.toggle('show', k === i)); i = (i + 1) % tags.length; later(rot, 3200); };
-  rot();
 }
 attract.addEventListener('click', () => go('welcome'));
 
@@ -163,17 +160,39 @@ $('#sheetScrim').addEventListener('click', closeSheet);
 function chip(t, q) {
   return `<div class="chip" data-chip="${t.id}"><img src="${t.img}" alt=""><span>${t.name}</span>${q > 1 ? `<span class="x2">×${q}</span>` : ''}</div>`;
 }
+function sumRow(t, q) {
+  return `<div class="sum-row">
+    <img src="${t.img}" alt="">
+    <span class="nm">${t.name}</span>
+    <div class="qty">
+      <button data-sdec="${t.id}" aria-label="Quitar uno" ${q <= 1 ? 'disabled' : ''}>−</button>
+      <output>${q}</output>
+      <button data-sinc="${t.id}" aria-label="Añadir uno" ${q >= MAX_QTY ? 'disabled' : ''}>+</button>
+    </div>
+    <button class="rm" data-srm="${t.id}" aria-label="Eliminar ${t.name}">×</button>
+  </div>`;
+}
 function renderSummary() {
   for (const [type, panel] of [['solid', '#panelSolid'], ['liquid', '#panelLiquid']]) {
     const items = TOPPINGS.filter(t => t.type === type && order[t.id]);
-    $('.chips', $(panel)).innerHTML = items.length ? items.map(t => chip(t, order[t.id])).join('') : '<span class="empty">Ninguno</span>';
+    $(panel).hidden = !items.length;
+    $('.rows', $(panel)).innerHTML = items.map(t => sumRow(t, order[t.id])).join('');
   }
   const n = units();
+  $('#sumList').classList.toggle('is-empty', !n);
   $('#priceBox').innerHTML = `
-    <div class="line"><span>Açaí bowl</span><span>${eur(PRICE_BASE)}</span></div>
+    <div class="line"><span>Bowl base</span><span>${eur(PRICE_BASE)}</span></div>
     ${n ? `<div class="line"><span>Toppings ×${n}</span><span>+${eur(n * PRICE_EXTRA)}</span></div>` : ''}
     <div class="tot"><span>Total</span><b>${eur(total())}</b></div>`;
 }
+$('.s-summary').addEventListener('click', e => {
+  const inc = e.target.closest('[data-sinc]'), dec = e.target.closest('[data-sdec]'), rm = e.target.closest('[data-srm]');
+  if (inc) order[inc.dataset.sinc] = Math.min(MAX_QTY, order[inc.dataset.sinc] + 1);
+  else if (dec) order[dec.dataset.sdec] = Math.max(1, order[dec.dataset.sdec] - 1);
+  else if (rm) delete order[rm.dataset.srm];
+  else return;
+  renderSummary();
+});
 
 /* ---------- 4 · payment ---------- */
 const pay = $('.s-payment');
