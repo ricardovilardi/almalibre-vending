@@ -105,32 +105,30 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* =========================================================
    2 · TOPPINGS
    ========================================================= */
-.group-title{text-align:center;font-size:62px;font-weight:700;color:var(--purple-800);margin:80px 0 32px}
+.group-title{text-align:center;font-size:62px;font-weight:700;color:var(--purple-800);margin:56px 0 26px}
 .group-title + .grid{margin-bottom:0}
-.s-toppings .head + .group-title{margin-top:120px}
+.s-toppings .head + .group-title{margin-top:90px}
 .grid{display:grid;grid-template-columns:repeat(3,300px);gap:30px;justify-content:center}
 .card{
-  position:relative;height:420px;border-radius:44px;background:var(--cream);
+  position:relative;height:500px;border-radius:44px;background:var(--cream);
   border:6px solid transparent;display:flex;flex-direction:column;align-items:center;
-  padding:40px 18px 20px;transition:border-color .2s, transform .15s, box-shadow .2s;
+  padding:84px 12px 22px;transition:border-color .2s, transform .15s, box-shadow .2s;
 }
 .card:active{transform:scale(.97)}
 .card.sel{border-color:var(--yellow);box-shadow:0 10px 30px rgba(249,181,27,.35)}
-.card img{width:250px;height:180px;object-fit:contain;margin-top:6px;transition:transform .3s}
+.card img{width:100%;height:190px;object-fit:contain;object-position:center bottom;transition:transform .3s}
+.card .illus{font-size:22px;color:#8a7f76;margin-top:8px}
 .card.sel img{transform:scale(1.06) translateY(-4px)}
-.card .name{font-size:27px;font-weight:600;text-align:center;line-height:1.15;margin-top:12px}
+.card .name{font-size:30px;font-weight:700;text-align:center;line-height:1.1;margin-top:6px;text-wrap:balance}
 .card .info{position:absolute;top:22px;right:22px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;border:3px solid var(--ink);line-height:1}
-.card .free{position:absolute;top:22px;left:22px;background:var(--purple-700);color:#fff;font-size:22px;font-weight:600;padding:6px 14px;border-radius:999px;opacity:0;transform:scale(.6);transition:.25s}
-.card.is-free .free{opacity:1;transform:none}
 .stepper{display:none;align-items:center;gap:22px;margin-top:auto}
-.card:not(.sel)::after{content:"Toca para añadir";margin-top:auto;font-size:22px;color:#9a8f86}
 .card.sel .stepper{display:flex}
 .stepper button{width:62px;height:62px;border-radius:50%;font-size:40px;font-weight:700;display:grid;place-items:center;line-height:1}
 .stepper .minus{background:#fff;border:3px solid var(--cream-line)}
 .stepper .plus{background:var(--yellow)}
 .stepper .plus:disabled{opacity:.35}
 .stepper .q{font-size:40px;font-weight:700;min-width:30px;text-align:center}
-.toppings-foot{position:absolute;bottom:130px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:28px}
+.toppings-foot{position:absolute;bottom:80px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:28px}
 .mini-total{font-size:34px;color:var(--muted)}
 .mini-total b{color:var(--ink);font-size:40px}
 
@@ -292,3 +290,10 @@ body.kiosk-mode .kiosk{border-radius:0;box-shadow:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
 .pb-hint{opacity:.6}
+
+/* summary: one full-width row per selection */
+.panel:not(.price){padding-inline:24px}
+.panel .chips{flex-direction:column;align-items:stretch;gap:16px}
+.panel .chip{max-width:none;width:100%;padding:14px 24px;font-size:32px;gap:20px}
+.panel .chip img{width:84px;height:64px}
+.panel .chip .x2{margin-left:auto;font-size:26px;padding:6px 14px}

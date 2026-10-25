@@ -5,13 +5,13 @@ const VIDEOS = {
   fill: 'assets/video/fill.mp4',       // empty cup being filled with açaí (white background)
 };
 
-const PRICE_BASE = 4.5;   // bowl incl. 1 topping
-const PRICE_EXTRA = 1.0;  // each extra topping
+const PRICE_BASE = 4.5;   // bowl base
+const PRICE_EXTRA = 1.0;  // each topping
 const MAX_QTY = 3;
 const IDLE_MS = 45000;
 
 const TOPPINGS = [
-  { id: 'pacoca',  type: 'solid',  name: 'Cacahuete dulce (paçoca)', img: 'assets/t-pacoca.png',
+  { id: 'pacoca',  type: 'solid',  name: 'Paçoca (Cacahuete dulce)', img: 'assets/t-pacoca.png',
     desc: 'Dulce brasileño de cacahuete tostado, desmenuzado sobre tu açaí.', ing: 'Cacahuete, azúcar, sal.', all: ['peanut'] },
   { id: 'granola', type: 'solid',  name: 'Granola crunchy', img: 'assets/t-granola.png',
     desc: 'Copos de avena tostados con un toque de miel, extra crujientes.', ing: 'Avena, miel, frutos secos.', all: ['nuts', 'peanut', 'gluten'] },
@@ -94,14 +94,13 @@ attract.addEventListener('click', () => go('welcome'));
 /* ---------- 2 · toppings ---------- */
 function resetOrder() { for (const k in order) delete order[k]; }
 const units = () => Object.values(order).reduce((a, b) => a + b, 0);
-const total = () => PRICE_BASE + Math.max(0, units() - 1) * PRICE_EXTRA;
-const freeId = () => TOPPINGS.find(t => order[t.id])?.id;
+const total = () => PRICE_BASE + units() * PRICE_EXTRA;
 
 function cardHTML(t) {
   return `<div class="card" data-id="${t.id}" role="button" tabindex="0">
-    <span class="free">Gratis</span>
     <span class="info" data-info="${t.id}" aria-label="Información">i</span>
     <img src="${t.img}" alt="">
+    <div class="illus">Imagen ilustrativa</div>
     <div class="name">${t.name}</div>
     <div class="stepper"><button class="minus" data-dec="${t.id}">−</button><span class="q">1</span><button class="plus" data-inc="${t.id}">+</button></div>
   </div>`;
@@ -110,11 +109,9 @@ $('#gridSolid').innerHTML = TOPPINGS.filter(t => t.type === 'solid').map(cardHTM
 $('#gridLiquid').innerHTML = TOPPINGS.filter(t => t.type === 'liquid').map(cardHTML).join('');
 
 function renderToppings() {
-  const free = freeId();
   $$('.card').forEach(c => {
     const q = order[c.dataset.id] || 0;
     c.classList.toggle('sel', q > 0);
-    c.classList.toggle('is-free', c.dataset.id === free);
     $('.q', c).textContent = q;
     $('.plus', c).disabled = q >= MAX_QTY;
   });
@@ -159,11 +156,10 @@ function renderSummary() {
     const items = TOPPINGS.filter(t => t.type === type && order[t.id]);
     $('.chips', $(panel)).innerHTML = items.length ? items.map(t => chip(t, order[t.id])).join('') : '<span class="empty">Ninguno</span>';
   }
-  const extra = Math.max(0, units() - 1);
+  const n = units();
   $('#priceBox').innerHTML = `
     <div class="line"><span>Açaí bowl</span><span>${eur(PRICE_BASE)}</span></div>
-    <div class="line sub"><span>1er topping de regalo</span><span>${units() ? '0,00 €' : '—'}</span></div>
-    ${extra ? `<div class="line"><span>Toppings extra ×${extra}</span><span>+${eur(extra * PRICE_EXTRA)}</span></div>` : ''}
+    ${n ? `<div class="line"><span>Toppings ×${n}</span><span>+${eur(n * PRICE_EXTRA)}</span></div>` : ''}
     <div class="tot"><span>Total</span><b>${eur(total())}</b></div>`;
 }
 
